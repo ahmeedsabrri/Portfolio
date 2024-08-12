@@ -1,8 +1,7 @@
-import { motion } from "framer-motion"
-
+import { motion } from "framer-motion";
 
 // variants
-const StairsAnimation = {
+const StairAnimation = {
     initial: {
         top: "0%",
     },
@@ -13,18 +12,34 @@ const StairsAnimation = {
         top: ["100%", "0%"],
     },
 }
-const Stairs = () => {
-return
-    <>
-=       {/* render 6 motion divs, each representing a step of stairs.
 
-        Each div will have the same animition defined by the stairsAnimation object. 
-        the delay for each div is calculated 
-        
-        
-        */}
-
-    </>
+const reverseIndex = (index) =>{
+    const totalSteps = 6;
+    return totalSteps - index - 1;
 }
 
-export default Stairs
+const Stairs = () => {
+    return (
+        <>
+            {[...Array(6)].map((_, index) => {
+                return (
+                    <motion.div
+                        key={index}
+                        variants={StairAnimation}
+                        initial="initial"
+                        animate="animate"
+                        exit="exit"
+                        transition={{
+                            duration: 0.4,
+                            ease: 'easeInOut',
+                            delay: reverseIndex(index) * 0.1,
+                        }}
+                        className="h-full w-full bg-accent relative"
+                    />
+                );
+            })}
+        </>
+    );
+}
+
+export default Stairs;
